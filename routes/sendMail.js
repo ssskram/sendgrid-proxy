@@ -11,7 +11,7 @@ router.post('/single',
     const valid = (checkToken(req.token))
     if (valid == true) {
       sgMail.setApiKey(process.env.SENDGRID)
-      const msg = req.body
+      const msg = JSON.parse(req.body)
       sgMail.send(msg)
     } else res.status(403).end()
   }
