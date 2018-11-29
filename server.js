@@ -14,7 +14,10 @@ app.set('port', process.env.PORT || 3000)
 app.use(bearerToken())
 
 // body parser
-app.use(bodyParser.json())
+app.use(bodyParser.json({
+  limit: '50mb'
+}))
+
 
 // enable cors on all requests
 app.use(cors())
@@ -23,7 +26,7 @@ app.use(cors())
 app.use(require('morgan')('combined'))
 
 // routes
-app.use("/sendMail",require('./routes/sendMail'))
+app.use("/sendMail", require('./routes/sendMail'))
 
 // Production error handler
 if (app.get('env') === 'production') {
