@@ -5,7 +5,6 @@ const router = express.Router()
 const checkToken = require('../token')
 const sgMail = require('@sendgrid/mail')
 
-
 // send single email
 router.post('/single',
   async function (req, res) {
@@ -15,6 +14,7 @@ router.post('/single',
       const msg = req.body
       try {
         sgMail.send(msg)
+        res.status(202).end()
       } catch (error) {
         res.status(404).send(error).end()
       }

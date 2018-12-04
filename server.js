@@ -13,14 +13,13 @@ app.set('port', process.env.PORT || 3000)
 // bearer token
 app.use(bearerToken())
 
+// enable cors on all requests
+app.use(cors())
+
 // body parser
 app.use(bodyParser.json({
   limit: '50mb'
 }))
-
-
-// enable cors on all requests
-app.use(cors())
 
 // logging
 app.use(require('morgan')('combined'))
