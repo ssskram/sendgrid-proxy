@@ -13,9 +13,9 @@ router.post('/single',
       sgMail.setApiKey(process.env.SENDGRID)
       const msg = req.body
       try {
-        await sgMail.send(msg)
+        const response = await sgMail.send(msg)
       } catch (error) {
-        res.status(404).send(error).end()
+        res.status(500).send(error).end()
       }
       res.status(202).end()
     } else res.status(403).end()
