@@ -1,0 +1,107 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Sendgrid Proxy",
+        "description": "Handles traffic between Sendgrid and client applications",
+        "version": "1.0.0"
+    },
+    "host": "sendgridproxy.azurewebsites.us",
+    "schemes": [
+        "https"
+    ],
+    "securityDefinitions": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    },
+    "paths": {
+        "/sendMail/single": {
+            "post": {
+                "security": [{
+                    "Bearer": []
+                }],
+                "summary": "Single message",
+                "description": "Accepts a json load w/ or w/o attachment, and passes it along",
+                "parameters": [{
+                        "name": "to",
+                        "in": "body",
+                        "description": "Email address of recipient",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "from",
+                        "in": "body",
+                        "description": "Email address & name of sender",
+                        "type": "object",
+                        "required": true,
+                        "properties": {
+                            "email": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    {
+                        "name": "subject",
+                        "in": "body",
+                        "description": "Subject line",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "html",
+                        "in": "body",
+                        "description": "Body of email as html stringified",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "attachments",
+                        "in": "body",
+                        "description": "Array of attachments, base64'd",
+                        "type": "array",
+                        "required": false,
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "content": {
+                                    "type": "string"
+                                },
+                                "filename": {
+                                    "type": "string"
+                                },
+                                "disposition": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "403": {
+                        "description": "Access Denied"
+                    },
+                    "500": {
+                        "description": "Server Error",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "Error": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

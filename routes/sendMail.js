@@ -17,7 +17,7 @@ router.post('/single',
       } catch (error) {
         res.status(500).send(error).end()
       }
-      res.status(202).end()
+      res.status(200).end()
     } else res.status(403).end()
   }
 )
